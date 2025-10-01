@@ -13,7 +13,13 @@ setup(
         "matplotlib",
         "pandas",
         "jupyterlab",
-        "notebook"       
+        "notebook",
+        "tqdm",
+        "ipywidgets",
+        "torch",
+        "torchvision",
+        "torchinfo",
+        "scikit-learn"
     ],
     entry_points={
         'console_scripts': [
