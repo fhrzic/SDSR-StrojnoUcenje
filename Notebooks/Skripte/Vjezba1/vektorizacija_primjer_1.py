@@ -17,7 +17,7 @@ def vectorized(A):
     return S
 
 def vectorized_torch(A):
-    S = A*A.sum()
+    S = (A*A).sum()
     return S
 
 
@@ -49,9 +49,9 @@ def main(nLow: int = 1,
             A = rng.random((n, n))
 
             if run_torch:
-                A_torch = torch.tensor(A, dtype= torch.float32, device=device)
 
                 start = time.perf_counter()
+                A_torch = torch.tensor(A, dtype= torch.float32, device=device)
                 _ = vectorized_torch(A_torch)
                 t_tvec[r] = time.perf_counter() - start
 

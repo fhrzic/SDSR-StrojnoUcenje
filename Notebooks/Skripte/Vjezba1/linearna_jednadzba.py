@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 # Linearna funkcija s jednom varijablom, x
 def linear_function_1D(x, beta, omega):
     # TODO -- implementirajte 1D linearnu funkciju
-    y = x
+    y = x*omega + beta
     return y
 
 # Linearna funkcija s dvije varijable, x1 and x2
 def linear_function_2D(x1, x2, beta, omega1, omega2):
     # TODO -- implementirajte 2D linearnu funkciju 
-    y = x1
+    y = beta + x1*omega1 + x2*omega2
     return y
 
 # Linearna funkcija s tri varijable, x1, x2, and x_3

@@ -19,7 +19,10 @@ setup(
         "torch",
         "torchvision",
         "torchinfo",
-        "scikit-learn"
+        "scikit-learn",
+        "graphviz",
+        "torchview",
+        "ipympl"
     ],
     entry_points={
         'console_scripts': [
