@@ -273,20 +273,20 @@ class model_1_3_1(nn.Module):
         _x = torch.as_tensor(x, device=self.theta10.device, dtype=self.theta10.dtype)
 
         # three affine branches
-        _z1 = 0
-        _z2 = 0
-        _z3 = 0
+        _z1 = self.theta10 + self.theta11 * _x
+        _z2 = self.theta20 + self.theta21 * _x
+        _z3 = self.theta30 + self.theta31 * _x
 
         # activations
-        _h1 = 0
-        _h2 = 0
-        _h3 = 0
+        _h1 = self.activation1(_z1)
+        _h2 = self.activation2(_z2)
+        _h3 = self.activation3(_z3)
         
         # Multiplications
-        _w1 = 0
-        _w2 = 0
-        _w3 = 0
+        _w1 = self.psi1 * _h1
+        _w2 = self.psi2 * _h2
+        _w3 = self.psi3 * _h3
 
         # linear combination with psi's
-        _y = 0
+        _y = self.psi0 + _w1 + _w2 + _w3 
         return _y
