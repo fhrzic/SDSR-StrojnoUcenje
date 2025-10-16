@@ -95,10 +95,10 @@ def evaluate_metrics(theta0: float = None,
     _y_pred = theta0 + theta1 * _x
 
     # Izračunavanje metrika #TODO
-    mse = 0
-    rmse = 0
-    mae = 0
-    r2 = 0
+    mse =  mean_squared_error(_y, _y_pred)
+    rmse = root_mean_squared_error(_y, _y_pred)
+    mae = mean_absolute_error(_y, _y_pred)
+    r2 = r2_score(_y, _y_pred)
 
     print(f"MSE:  {mse:.4f}")
     print(f"RMSE: {rmse:.4f}")
@@ -135,12 +135,15 @@ def grid_search():
     _f = lambda _x, _theta0, _theta1: _x * _theta1 + _theta0
 
     # Generirajmo thete #TODO HINT linspace i meshgrid
-    _theta0 = 0
-    _theta1 = 0
+    _theta0 = np.linspace(-10, 10, 25)
+    _theta1 = np.linspace(-10, 10, 25)
 
     # Izračunajmo za svaku kombinaciju parametara theta cijenu
-    _score = [0]
-    
+    _score = []
+    for _t0 in _theta0:
+        for _t1 in _theta1:
+            _y_hat = _f(_x, _t0, _t1)
+            _score.append(mean_squared_error(_y, _y_hat))
     
     _score = np.asarray(_score)
     _xs, _ys = np.meshgrid(_theta0, _theta1)
