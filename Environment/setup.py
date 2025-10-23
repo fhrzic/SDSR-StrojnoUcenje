@@ -22,7 +22,8 @@ setup(
         "scikit-learn",
         "graphviz",
         "torchview",
-        "ipympl"
+        "ipympl",
+        "opencv-python"
     ],
     entry_points={
         'console_scripts': [

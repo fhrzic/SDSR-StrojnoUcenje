@@ -418,141 +418,141 @@ def create_model_1_3_1_component_plots_widget(device: str = "cpu"):
     """
 
     # --- Controls (exact numeric inputs) ---
-    t10 = FloatText(description="θ10", value=0.0, layout={"width":"140px"})
-    t11 = FloatText(description="θ11", value=1.0, layout={"width":"140px"})
-    t20 = FloatText(description="θ20", value=0.0, layout={"width":"140px"})
-    t21 = FloatText(description="θ21", value=1.0, layout={"width":"140px"})
-    t30 = FloatText(description="θ30", value=0.0, layout={"width":"140px"})
-    t31 = FloatText(description="θ31", value=1.0, layout={"width":"140px"})
+    _t10 = FloatText(description="θ10", value=0.0, layout={"width":"140px"})
+    _t11 = FloatText(description="θ11", value=1.0, layout={"width":"140px"})
+    _t20 = FloatText(description="θ20", value=0.0, layout={"width":"140px"})
+    _t21 = FloatText(description="θ21", value=1.0, layout={"width":"140px"})
+    _t30 = FloatText(description="θ30", value=0.0, layout={"width":"140px"})
+    _t31 = FloatText(description="θ31", value=1.0, layout={"width":"140px"})
 
-    p0  = FloatText(description="ψ0", value=0.0, layout={"width":"140px"})
-    p1  = FloatText(description="ψ1", value=1.0, layout={"width":"140px"})
-    p2  = FloatText(description="ψ2", value=0.0, layout={"width":"140px"})
-    p3  = FloatText(description="ψ3", value=0.0, layout={"width":"140px"})
+    _p0  = FloatText(description="ψ0", value=0.0, layout={"width":"140px"})
+    _p1  = FloatText(description="ψ1", value=1.0, layout={"width":"140px"})
+    _p2  = FloatText(description="ψ2", value=0.0, layout={"width":"140px"})
+    _p3  = FloatText(description="ψ3", value=0.0, layout={"width":"140px"})
 
-    dd_act = Dropdown(description="activation",
-                      options=["none","relu","tanh","sigmoid"],
-                      value="none", layout={"width":"200px"})
+    _dd_act = Dropdown(description="activation",
+                       options=["none","relu","tanh","sigmoid"],
+                       value="none", layout={"width":"200px"})
 
-    x_start = FloatText(description="x start", value=0.0,  layout={"width":"140px"})
-    x_stop  = FloatText(description="x stop",  value=1.0,  layout={"width":"140px"})
-    x_step  = FloatText(description="x step",  value=0.01, layout={"width":"140px"})
+    _x_start = FloatText(description="x start", value=0.0,  layout={"width":"140px"})
+    _x_stop  = FloatText(description="x stop",  value=1.0,  layout={"width":"140px"})
+    _x_step  = FloatText(description="x step",  value=0.01, layout={"width":"140px"})
 
     # Axis locking controls
-    lock_y = ToggleButton(description="lock y", value=False, layout={"width":"100px"})
-    y_min  = FloatText(description="y min", value=-5.0, layout={"width":"140px"})
-    y_max  = FloatText(description="y max", value= 5.0, layout={"width":"140px"})
+    _lock_y = ToggleButton(description="lock y", value=False, layout={"width":"100px"})
+    _y_min  = FloatText(description="y min", value=-5.0, layout={"width":"140px"})
+    _y_max  = FloatText(description="y max", value= 5.0, layout={"width":"140px"})
 
-    btn_plot = Button(description="Plot", layout={"width":"120px"})
-    out = Output()
+    _btn_plot = Button(description="Plot", layout={"width":"120px"})
+    _out = Output()
 
     def _on_plot_clicked(_=None):
-        out.clear_output(wait=True)
-        with out:
+        _out.clear_output(wait=True)
+        with _out:
             # Build x
             try:
-                xs = np.arange(float(x_start.value), float(x_stop.value), float(x_step.value))
-            except Exception as e:
-                print(f"Invalid x range: {e}")
+                _xs = np.arange(float(_x_start.value), float(_x_stop.value), float(_x_step.value))
+            except Exception as _e:
+                print(f"Invalid x range: {_e}")
                 return
-            if xs.size == 0:
+            if _xs.size == 0:
                 print("x range is empty. Check start/stop/step.")
                 return
 
-            theta_init = np.array([
-                [t10.value, t11.value],
-                [t20.value, t21.value],
-                [t30.value, t31.value],
+            _theta_init = np.array([
+                [_t10.value, _t11.value],
+                [_t20.value, _t21.value],
+                [_t30.value, _t31.value],
             ], dtype=float)
 
-            psi_init = np.array([p0.value, p1.value, p2.value, p3.value], dtype=float)
-            act = None if dd_act.value == "none" else dd_act.value
+            _psi_init = np.array([_p0.value, _p1.value, _p2.value, _p3.value], dtype=float)
+            _act = None if _dd_act.value == "none" else _dd_act.value
 
             # Model
-            model = model_1_3_1_for_plots(theta_init_matrix=theta_init,
-                                          psi_init_matrix=psi_init,
-                                          activation_function=act).to(device).eval()
+            _model = model_1_3_1_for_plots(theta_init_matrix=_theta_init,
+                                           psi_init_matrix=_psi_init,
+                                           activation_function=_act).to(device).eval()
 
             # Forward
             with torch.no_grad():
-                x_t = torch.tensor(xs, dtype=torch.float32, device=device)
-                y, z1, z2, z3, h1, h2, h3, w1, w2, w3 = model(x_t)
+                _x_t = torch.tensor(_xs, dtype=torch.float32, device=device)
+                _y, _z1, _z2, _z3, _h1, _h2, _h3, _w1, _w2, _w3 = _model(_x_t)
 
-            to_np = lambda t: t.detach().cpu().numpy().astype(float)
+            _to_np = lambda _t: _t.detach().cpu().numpy().astype(float)
 
             # Arrange series: 3x3 top, bottom wide
-            series_grid = [
-                ("z1 = t10 + t11·x", to_np(z1)),
-                ("z2 = t20 + t21·x", to_np(z2)),
-                ("z3 = t30 + t31·x", to_np(z3)),
-                ("h1 = a1(z1)",      to_np(h1)),
-                ("h2 = a2(z2)",      to_np(h2)),
-                ("h3 = a3(z3)",      to_np(h3)),
-                ("w1 = ψ1·h1",       to_np(w1)),
-                ("w2 = ψ2·h2",       to_np(w2)),
-                ("w3 = ψ3·h3",       to_np(w3)),
+            _series_grid = [
+                ("z1 = t10 + t11·x", _to_np(_z1)),
+                ("z2 = t20 + t21·x", _to_np(_z2)),
+                ("z3 = t30 + t31·x", _to_np(_z3)),
+                ("h1 = a1(z1)",      _to_np(_h1)),
+                ("h2 = a2(z2)",      _to_np(_h2)),
+                ("h3 = a3(z3)",      _to_np(_h3)),
+                ("w1 = ψ1·h1",       _to_np(_w1)),
+                ("w2 = ψ2·h2",       _to_np(_w2)),
+                ("w3 = ψ3·h3",       _to_np(_w3)),
             ]
-            series_wide = ("y  (final output)", to_np(y))
+            _series_wide = ("y  (final output)", _to_np(_y))
 
             # --- Determine axis limits ---
-            x_lo, x_hi = float(x_start.value), float(x_stop.value)  # static x across all
-            if lock_y.value:
-                y_lo, y_hi = float(y_min.value), float(y_max.value)
+            _x_lo, _x_hi = float(_x_start.value), float(_x_stop.value)  # static x across all
+            if _lock_y.value:
+                _y_lo, _y_hi = float(_y_min.value), float(_y_max.value)
             else:
                 # global min/max across all series (including y)
-                all_vals = np.concatenate([v for _, v in series_grid] + [series_wide[1]])
-                if all_vals.size == 0:
-                    y_lo, y_hi = -1.0, 1.0
+                _all_vals = np.concatenate([_v for _, _v in _series_grid] + [_series_wide[1]])
+                if _all_vals.size == 0:
+                    _y_lo, _y_hi = -1.0, 1.0
                 else:
-                    y_lo, y_hi = np.min(all_vals), np.max(all_vals)
+                    _y_lo, _y_hi = np.min(_all_vals), np.max(_all_vals)
                     # small padding
-                    pad = 0.05 * (y_hi - y_lo if y_hi > y_lo else 1.0)
-                    y_lo, y_hi = y_lo - pad, y_hi + pad
+                    _pad = 0.05 * (_y_hi - _y_lo if _y_hi > _y_lo else 1.0)
+                    _y_lo, _y_hi = _y_lo - _pad, _y_hi + _pad
                 # update fields to show computed limits (optional)
-                y_min.value, y_max.value = float(y_lo), float(y_hi)
+                _y_min.value, _y_max.value = float(_y_lo), float(_y_hi)
 
             # --- Grid: 3x3 + 1 wide bottom ---
-            fig = plt.figure(figsize=(12, 16))
-            gs = GridSpec(4, 3, figure=fig)
+            _fig = plt.figure(figsize=(12, 16))
+            _gs = GridSpec(4, 3, figure=_fig)
 
             # Top 3x3
-            for i, (title, yvals) in enumerate(series_grid):
-                r, c = divmod(i, 3)
-                ax = fig.add_subplot(gs[r, c])
-                ax.plot(xs, yvals)
-                ax.set_title(title, fontsize=10)
-                ax.grid(True, linestyle="--", alpha=0.3)
+            for _i, (_title, _yvals) in enumerate(_series_grid):
+                _r, _c = divmod(_i, 3)
+                _ax = _fig.add_subplot(_gs[_r, _c])
+                _ax.plot(_xs, _yvals)
+                _ax.set_title(_title, fontsize=10)
+                _ax.grid(True, linestyle="--", alpha=0.3)
                 # static axes:
-                ax.set_xlim(x_lo, x_hi)
-                ax.set_ylim(y_lo, y_hi)
-                if r == 2:
-                    ax.set_xlabel("x")
-                if c == 0:
-                    ax.set_ylabel("value")
+                _ax.set_xlim(_x_lo, _x_hi)
+                _ax.set_ylim(_y_lo, _y_hi)
+                if _r == 2:
+                    _ax.set_xlabel("x")
+                if _c == 0:
+                    _ax.set_ylabel("value")
 
             # Bottom wide (y)
-            ax_wide = fig.add_subplot(gs[3, :])
-            ax_wide.plot(xs, series_wide[1])
-            ax_wide.set_title(f"{series_wide[0]} (wide)", fontsize=11)
-            ax_wide.set_xlabel("x")
-            ax_wide.set_ylabel("value")
-            ax_wide.grid(True, linestyle="--", alpha=0.3)
-            ax_wide.set_xlim(x_lo, x_hi)
-            ax_wide.set_ylim(y_lo, y_hi)
+            _ax_wide = _fig.add_subplot(_gs[3, :])
+            _ax_wide.plot(_xs, _series_wide[1])
+            _ax_wide.set_title(f"{_series_wide[0]} (wide)", fontsize=11)
+            _ax_wide.set_xlabel("x")
+            _ax_wide.set_ylabel("value")
+            _ax_wide.grid(True, linestyle="--", alpha=0.3)
+            _ax_wide.set_xlim(_x_lo, _x_hi)
+            _ax_wide.set_ylim(_y_lo, _y_hi)
 
-            fig.tight_layout()
-            display(fig)
-            plt.close(fig)
+            _fig.tight_layout()
+            display(_fig)
+            plt.close(_fig)
 
-    btn_plot.on_click(_on_plot_clicked)
+    _btn_plot.on_click(_on_plot_clicked)
 
     # Initial draw
     _on_plot_clicked()
 
-    ui = VBox([
-        HBox([t10, t11, t20, t21, t30, t31]),
-        HBox([p0, p1, p2, p3, dd_act]),
-        HBox([x_start, x_stop, x_step, lock_y, y_min, y_max, btn_plot]),
-        out
+    _ui = VBox([
+        HBox([_t10, _t11, _t20, _t21, _t30, _t31]),
+        HBox([_p0, _p1, _p2, _p3, _dd_act]),
+        HBox([_x_start, _x_stop, _x_step, _lock_y, _y_min, _y_max, _btn_plot]),
+        _out
     ])
-    display(ui)
+    display(_ui)
