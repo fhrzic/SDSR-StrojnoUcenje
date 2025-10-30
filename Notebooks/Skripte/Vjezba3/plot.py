@@ -36,11 +36,14 @@ def create_bike_correlation_widget(path_to_csv: str = None):
 
     # Učitajmo nazive stupaca 
     assert os.path.exists(path_to_csv), f"Path does not exist: {path_to_csv}"
-    _columns = pd.read_csv(path_to_csv, nrows=0).columns.tolist() 
-    # Maknimo string zbog plottanja
-    if 'dteday' in _columns:
-        _columns.remove('dteday')
+    _df = pd.read_csv(path_to_csv)
 
+    # String update
+    _df_numeric = _df.select_dtypes(include=[np.number])
+
+    # String update
+    _columns = _df_numeric.columns.tolist()
+   
     def plot_correlations(var1: str = None,
                         var2: str = None,
                         path_to_csv: str = None,
