@@ -19,8 +19,8 @@ def broj_regija(Di: int = 1,
     Returns:
         *int, broj linearnih regija
     """
-
-    return 0
+    _k = min(Di, D)
+    return sum(math.comb(D, j) for j in range(_k + 1))
 
 def broj_parametara(Di: int = 1, 
                     D: int = 1) -> int:
@@ -35,7 +35,7 @@ def broj_parametara(Di: int = 1,
     Returns:
         *int, broj parametara 
     """
-    return 0
+    return (Di + 1) * D + D + 1  # == Di*D + 2D + 1
 
 
 def create_regions_widget_D():

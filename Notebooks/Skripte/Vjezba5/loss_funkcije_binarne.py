@@ -21,7 +21,7 @@ def sigmoid(model_out):
     Povratna vrijednost:
         sig_model_out (float ili np.array): Sigmoid izlaz u intervalu [0, 1]
     """
-    sig_model_out = 0
+    sig_model_out = 1 / (1 + np.exp(-model_out))
     return sig_model_out
 
 
@@ -37,7 +37,7 @@ def bernoulli_distribution(y, lambda_param):
     Povratna vrijednost:
         prob (np.array ili float): Vjerojatnost da se opaža y za zadani λ
     """
-    prob = 0
+    prob = np.power(lambda_param, y) * np.power(1 - lambda_param, 1 - y)
     return prob
 
 
@@ -55,10 +55,10 @@ def compute_likelihood_b(y_train, lambda_param):
         likelihood (float): Ukupni likelihood opaženih podataka
     """
     # Izračunaj Bernoulli vjerojatnosti za svaki podatak
-    sample_probs = 0
+    sample_probs = bernoulli_distribution(y_train, lambda_param)
 
     # Likelihood je produkt pojedinačnih vjerojatnosti
-    likelihood = 0
+    likelihood = np.prod(sample_probs)
 
     return likelihood
 
@@ -78,7 +78,7 @@ def compute_negative_log_likelihood_b(y_train, lambda_param):
     """
     # Mali offset da se izbjegne log(0) (numerička stabilnost)
     eps = 1e-12
-    lambda_param = 0
+    lambda_param = np.clip(lambda_param, eps, 1 - eps)
 
-    nll = 0
+    nll = -np.sum(y_train * np.log(lambda_param) + (1 - y_train) * np.log(1 - lambda_param))
     return nll
