@@ -5,7 +5,7 @@ from matplotlib.colors import ListedColormap
 from ipywidgets import FloatSlider, IntSlider, IntText, FloatText, HBox, VBox, Output, Label, Layout
 from IPython.display import display
 import sys
-
+from typing import Optional, Tuple
 # Add project files
 current_file_path = os.path.abspath(__file__)
 main_dir =  os.path.dirname(os.path.dirname(current_file_path))
