@@ -534,14 +534,19 @@ def create_model_1_3_1_component_plots_widget(device: str = "cpu"):
                     _ax.set_ylabel("value")
 
             # Bottom wide (y)
-            _ax_wide = _fig.add_subplot(_gs[3, :])
+            _ax_wide = _fig.add_subplot(_gs[3, 0])
             _ax_wide.plot(_xs, _series_wide[1])
-            _ax_wide.set_title(f"{_series_wide[0]} (wide)", fontsize=11)
+            _ax_wide.set_title(f"{_series_wide[0]}", fontsize=11)
             _ax_wide.set_xlabel("x")
             _ax_wide.set_ylabel("value")
             _ax_wide.grid(True, linestyle="--", alpha=0.3)
             _ax_wide.set_xlim(_x_lo, _x_hi)
             _ax_wide.set_ylim(_y_lo, _y_hi)
+
+            # Turn off unused axes in bottom row
+            for _c in (1, 2):
+                _ax_empty = _fig.add_subplot(_gs[3, _c])
+                _ax_empty.axis("off")
 
             _fig.tight_layout()
             display(_fig)

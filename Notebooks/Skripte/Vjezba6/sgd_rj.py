@@ -320,6 +320,8 @@ def sgd_widget(
             _axL.set_xlabel(r'Offset $\phi_{0}$ (theta0)'); _axL.set_ylabel(r'Frequency $\phi_{1}$ (theta1)')
             _axL.set_title('Konture MSE + GD (full-batch)')
             _axL.legend(loc="best")
+
+            #_fig_left.savefig("gd_contours_left.png", dpi=300, bbox_inches="tight")
             plt.tight_layout(); plt.show()#display(_fig_left)
             _final_info_gd.value = (
                 f"Final GD θ: [θ₀={_theta_final_gd[0]:.4f}, θ₁={_theta_final_gd[1]:.4f}]   "
@@ -343,6 +345,7 @@ def sgd_widget(
             _axR.set_xlabel(r'Offset $\phi_{0}$ (theta0)'); _axR.set_ylabel(r'Frequency $\phi_{1}$ (theta1)')
             _axR.set_title('Konture MSE + SGD (mini-batch)')
             _axR.legend(loc="best")
+            #_fig_right.savefig("gd_right_left.png", dpi=300, bbox_inches="tight")
             plt.tight_layout(); plt.show()#display(_fig_right)
             _final_info_sgd.value = (
                 f"Final SGD θ: [θ₀={_theta_final_sgd[0]:.4f}, θ₁={_theta_final_sgd[1]:.4f}]   "
