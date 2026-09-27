@@ -12,9 +12,8 @@ Laboratorij za umjetnu inteligenciju Tehničkog fakulteta Sveučilišta u Rijeci
 
 ## Termin održavanja
 
-Predavanja: Utorkom od 8:30 do 10:00, u učionici U9.
+Predavanja: Utorkom od 8:00 do 10:00, u učionici U10.
 
 Vježbe: Četvrtkom od 16:00 do 18:00, u informatičkom kabinetu I8.
 
 ---
-
