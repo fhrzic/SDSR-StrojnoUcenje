@@ -103,7 +103,7 @@ class model_1_1_1(nn.Module):
         Returns:
             * rezultat pravca: x * theta0 + theta1
         """ 
-        _x = torch.as_tensor(x, device=self.theta0.device, dtype=self.theta0.dtype)
+        _x = x.to(device=self.theta0.device, dtype=self.theta0.dtype)
         _b0 = self.theta0 
         _b1 = self.theta1 
         _z1 = _b1 * _x + _b0
@@ -181,7 +181,7 @@ class model_1_3_1_for_plots(nn.Module):
             y = psi0 + psi1*(a1(t10 + t11*x)) + psi2*(a2(t20 + t21*x)) + psi3*(a3(t30 + t31*x))
 
         """ 
-        _x = torch.as_tensor(x, device=self.theta10.device, dtype=self.theta10.dtype)
+        _x = x.to(device=self.theta10.device, dtype=self.theta10.dtype)
 
         # three affine branches
         _z1 = self.theta10 + self.theta11 * _x
@@ -270,7 +270,7 @@ class model_1_3_1(nn.Module):
             y = psi0 + psi1*(a1(t10 + t11*x)) + psi2*(a2(t20 + t21*x)) + psi3*(a3(t30 + t31*x))
 
         """ 
-        _x = torch.as_tensor(x, device=self.theta10.device, dtype=self.theta10.dtype)
+        _x = x.to(device=self.theta10.device, dtype=self.theta10.dtype)
 
         # three affine branches
         _z1 = self.theta10 + self.theta11 * _x
