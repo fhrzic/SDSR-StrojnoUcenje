@@ -135,8 +135,8 @@ class model_2_3_1(nn.Module):
         if x1 is None or x2 is None:
             raise ValueError("Both x1 and x2 must be provided.")
 
-        _x1 = torch.as_tensor(x1, device=self.theta10.device, dtype=self.theta10.dtype)
-        _x2 = torch.as_tensor(x2, device=self.theta10.device, dtype=self.theta10.dtype)
+        _x1 = x1.to(device=self.theta10.device, dtype=self.theta10.dtype)
+        _x2 = x2.to(device=self.theta10.device, dtype=self.theta10.dtype)
 
         # Osiguraj kompatibilne dimenzije (broadcast ako je potrebno)
         _x1, _x2 = torch.broadcast_tensors(_x1, _x2)
@@ -240,7 +240,7 @@ class model_1_3_2(nn.Module):
         Returns:
             (y1, y2): dva izlaza s istim batch shapeom kao x
         """
-        _x = torch.as_tensor(x, device=self.theta10.device, dtype=self.theta10.dtype)
+        _x = x.to(device=self.theta10.device, dtype=self.theta10.dtype)
 
         # tri afine transformacije
         _z1 = self.theta10 + self.theta11 * _x
