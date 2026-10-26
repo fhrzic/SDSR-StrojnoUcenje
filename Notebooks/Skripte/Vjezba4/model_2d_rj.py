@@ -240,7 +240,7 @@ class model_1_3_2(nn.Module):
         Returns:
             (y1, y2): dva izlaza s istim batch shapeom kao x
         """
-        _x = x.to(device=self.theta10.device, dtype=self.theta10.dtype)
+        _x = torch.as_tensor(x, device=self.theta10.device, dtype=self.theta10.dtype)
 
         # tri afine transformacije
         _z1 = self.theta10 + self.theta11 * _x
